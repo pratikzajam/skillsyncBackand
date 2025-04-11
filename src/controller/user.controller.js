@@ -149,16 +149,27 @@ export const addProfile = async (req, res) => {
 
 
         const { id } = req.params
-        const { fullName, dateOfBirth, phoneNo, address, gender, skills, candidateType, yearOfExperience, githubLink, linkDinLink } = req.body || {};
+        const { fullName, dateOfBirth, phoneNo, address, gender, skills, candidateType, yearOfExperience, githubLink, linkdinLink } = req.body || {};
 
 
-        if (!fullName || !dateOfBirth || !phoneNo || !address || !gender || !skills || !candidateType || !yearOfExperience || !githubLink || !linkDinLink) {
+        if (!id) {
+            return res.status(400).json({
+                status: false,
+                message: "Id is required",
+                data: null
+            });
+        }
+
+
+        if (!fullName || !dateOfBirth || !phoneNo || !address || !gender || !skills || !candidateType || !yearOfExperience || !githubLink || !linkdinLink) {
             return res.status(400).json({
                 status: false,
                 message: "All fields are required",
                 data: null
             });
         }
+
+
 
         if (phoneNo.length != 10) {
             return res.status(400).json({
@@ -169,13 +180,25 @@ export const addProfile = async (req, res) => {
         }
 
 
-        const utcDate = new Date(Date.UTC(...dateOfBirth.split("-").map((v, i) => i === 1 ? +v - 1 : +v)));
 
-        let sanitedDate = utcDate.toUTCString();
+
+        // Split the date and convert to UTC Date
+        const utcDate = new Date(Date.UTC(
+            ...dateOfBirth.split("-").map((v, i) => i === 1 ? +v - 1 : +v) // Month is 0-indexed, so subtract 1 from it
+        ));
+
+        // Check if the date is valid before proceeding
+        if (isNaN(utcDate)) {
+            console.log("Invalid Date");
+        } else {
+            // Convert the UTC Date to a string format
+            let sanitizedDate = utcDate.toUTCString();
+            console.log(sanitizedDate); // Example output: "Fri, 11 Apr 2025 00:00:00 GMT"
+        }
 
         const updateData = {
             fullName,
-            dateOfBirth: sanitedDate,
+            dateOfBirth: dateOfBirth,
             phoneNo,
             address,
             gender,
@@ -183,7 +206,7 @@ export const addProfile = async (req, res) => {
             candidateType,
             yearOfExperience,
             githubLink,
-            linkDinLink
+            linkdinLink
         };
 
         const result = await user.updateOne(
@@ -209,7 +232,7 @@ export const addProfile = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             status: true,
-            message: "Something went wrong",
+            message: error.message,
             data: null
         });
     }
