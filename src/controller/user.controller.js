@@ -149,7 +149,7 @@ export const addProfile = async (req, res) => {
 
 
         const { id } = req.params
-        const { fullName, dateOfBirth, phoneNo, address, gender, skills, candidateType, yearOfExperience, githubLink, linkdinLink } = req.body || {};
+        const { fullName, dateOfBirth, phoneNo, address, gender, skills, candidateType, yearsOfExperience, githubLink, linkdinLink } = req.body || {};
 
 
         if (!id) {
@@ -161,7 +161,7 @@ export const addProfile = async (req, res) => {
         }
 
 
-        if (!fullName || !dateOfBirth || !phoneNo || !address || !gender || !skills || !candidateType || !yearOfExperience || !githubLink || !linkdinLink) {
+        if (!fullName || !dateOfBirth || !phoneNo || !address || !gender || !skills || !candidateType || !yearsOfExperience || !githubLink || !linkdinLink) {
             return res.status(400).json({
                 status: false,
                 message: "All fields are required",
@@ -204,7 +204,7 @@ export const addProfile = async (req, res) => {
             gender,
             skills,
             candidateType,
-            yearOfExperience,
+            yearsOfExperience,
             githubLink,
             linkdinLink
         };

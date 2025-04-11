@@ -39,7 +39,7 @@ const userSchema = new Schema({
         enum: ['fresher', 'experience'],
 
     },
-    yearOfExp: {
+    yearsOfExperience: {
         type: Number,
     },
     githubLink: {
