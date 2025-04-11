@@ -142,3 +142,80 @@ export const login = async (req, res) => {
 };
 
 
+
+export const addProfile = async (req, res) => {
+
+    try {
+
+
+        const { id } = req.params
+        const { fullName, dateOfBirth, phoneNo, address, gender, skills, candidateType, yearOfExperience, githubLink, linkDinLink } = req.body || {};
+
+
+        if (!fullName || !dateOfBirth || !phoneNo || !address || !gender || !skills || !candidateType || !yearOfExperience || !githubLink || !linkDinLink) {
+            return res.status(400).json({
+                status: false,
+                message: "All fields are required",
+                data: null
+            });
+        }
+
+        if (phoneNo.length != 10) {
+            return res.status(400).json({
+                status: false,
+                message: "Mobile phone number must be exactly 10 digits long.",
+                data: null
+            });
+        }
+
+
+        const utcDate = new Date(Date.UTC(...dateOfBirth.split("-").map((v, i) => i === 1 ? +v - 1 : +v)));
+
+        let sanitedDate = utcDate.toUTCString();
+
+        const updateData = {
+            fullName,
+            dateOfBirth: sanitedDate,
+            phoneNo,
+            address,
+            gender,
+            skills,
+            candidateType,
+            yearOfExperience,
+            githubLink,
+            linkDinLink
+        };
+
+        const result = await user.updateOne(
+            { _id: id },
+            { $set: updateData }
+        );
+
+        if (result.modifiedCount === 0) {
+            return res.status(400).json({
+                status: false,
+                message: "Profile update failed or no changes made",
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: "Profile updated successfully",
+            data: updateData
+        });
+
+
+    } catch (error) {
+        return res.status(500).json({
+            status: true,
+            message: "Something went wrong",
+            data: null
+        });
+    }
+
+
+
+}
+
+

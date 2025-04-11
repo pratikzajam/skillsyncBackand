@@ -12,6 +12,41 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
+    },
+    fullName: {
+        type: String,
+    },
+    dateOfBirth: {
+        type: Date
+    },
+    phoneNo: {
+        type: Number,
+    },
+    address: {
+        type: String
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female', 'Other'],
+
+    },
+    skills: {
+        type: [String],
+        default: []
+    },
+    candidate_type: {
+        type: String,
+        enum: ['fresher', 'experience'],
+
+    },
+    yearOfExp: {
+        type: Number,
+    },
+    githubLink: {
+        type: String,
+    },
+    linkDinLink: {
+        type: String,
     }
 
 });
