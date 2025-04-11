@@ -16,15 +16,15 @@ export let signup = async (req, res) => {
             })
         }
 
-        let isEmailExists = user.find({ email: email });
+        // let isEmailExists = user.find({ email: email });
 
-        if (isEmailExists) {
-            return res.status(400).json({
-                status: false,
-                message: "Email allready exists in the system",
-                data: null
-            })
-        }
+        // if (isEmailExists) {
+        //     return res.status(400).json({
+        //         status: false,
+        //         message: "Email allready exists in the system",
+        //         data: null
+        //     })
+        // }
 
         let sanitedPassword = password.trim();
         let sanitedConfirmPassword = confirmpassword.trim();
