@@ -7,7 +7,7 @@ let route = express.Router();
 
 
 route.post("/signup", signup);
-route.get("/login", login);
+route.post("/login", login);
 route.post("/addprofile/:id", addProfile);
 
 
