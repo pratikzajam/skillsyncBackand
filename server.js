@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000; // Fallback port just in case
 
 // ✅ Enable CORS for specific origins
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://skill-sync-backend-chi.vercel.app'],
+  origin: "*",
   credentials: true
 }));
 
