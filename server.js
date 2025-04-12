@@ -8,9 +8,11 @@ const port = process.env.PORT || 5000; // Fallback port just in case
 
 // ✅ Enable CORS for specific origins
 app.use(cors({
-  origin: "*",
+  origin: "*", // Allow all origins (for testing)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Add any other methods if required
   credentials: true
 }));
+
 
 // Middleware
 app.use(express.json());
